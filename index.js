@@ -14,18 +14,14 @@ require('dotenv').config();
 const { conectar } = require('./base_de_datos/configuracion');  
 
 const app = express();
-
+app.use(express.json());
 app.use(cors());
 conectar();
 
-app.get('/', (req, res) =>{
-    res.json({
-        ok: true,
-        msg:'Hola Mundo'
-    })
-});
-
+app.use('/api/campeones', require('./routes/campeones'));
+app.use('/api/regiones', require('./routes/regiones'));
 
 app.listen(process.env.PORT, () => {
     console.log('Servidor corriendo en puerto ' + process.env.PORT);
 });
+
